@@ -3,6 +3,7 @@ CODE:=guessinggame.sh
 all: README.md
 
 README.md: ${CODE}
+	# building README.md file
 	@printf "# Guessing Game\n\n" > README.md
 	@printf "Make run at: %s\n\n" "$(shell date)" >> README.md
 	@printf "File ${CODE} has " >> README.md
