@@ -1,17 +1,16 @@
-#LENGTH:=$(shell cat guessinggame.sh | wc -l)
-#CODE_LEN:=$(shell egrep -v '^#|^\s*$' guessinggame.sh | wc -l)
-CODE=guessinggame.sh
+CODE:=guessinggame.sh
 
 all: README.md
 
 README.md: ${CODE}
-	echo "Guessing Game" > README.md
-	echo "Make run at: $(shell date)" >> README.md
-	printf "File ${CODE} has " >> README.md
-	printf $(shell cat guessinggame.sh | wc -l) >> README.md 
-	printf " lines of which " >> README.md
-	printf "$(egrep -v '^#|^\s*$' ${CODE} | wc -l)" >> README.md
-	printf " are code.\n" >> README.md
+	@printf "# Guessing Game\n\n" > README.md
+	@printf "Make run at: %s\n\n" "$(shell date)" >> README.md
+	@printf "File ${CODE} has " >> README.md
+	@printf $(shell cat ${CODE} | wc -l) >> README.md 
+	@printf " lines of which " >> README.md
+	# uses grep to count line that are neither comments nor blank 
+	@printf "%s" "$(shell egrep -cv -e '^\s*#' -e '^\s*$$' ${CODE})" >> README.md
+	@printf " are code.\n" >> README.md
 
 clean:
 	rm README.md
